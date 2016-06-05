@@ -5,7 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "webrtc.io": "^0.0.4",
-    "websocket": "^1.0.23"
+    "websocket": "^1.0.23",
+    "express": "4.13.3"
   },
   "devDependencies": {
   
