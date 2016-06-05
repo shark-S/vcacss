@@ -1,0 +1,25 @@
+{
+  "name": "videochatt",
+  "version": "1.0.0",
+  "description": "Video chatting",
+  "main": "main.js",
+  "dependencies": {
+    "webrtc.io": "^0.0.4",
+    "websocket": "^1.0.23"
+  },
+  "devDependencies": {
+  
+  },
+  "scripts": {
+    "start":"node main.js"
+  },
+  "keywords": [
+    "\"heroku\""
+  ],
+  "author": "shark_s",
+  "license": "UNLICENSED",
+  "engines": {
+      "node":"0.12.14"
+  }
+    
+}
