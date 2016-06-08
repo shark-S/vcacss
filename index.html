@@ -12,7 +12,14 @@
     <input id="videoCallButton" type="button" disabled value="Video Call"/>
     <input id="endCallButton" type="button" disabled value="End Call"/>
     <script type="text/javascript">
-      window.addEventListener("load", pageReady);
+      ws.onmessage = function (event) {
+  var li = document.createElement('li');
+  li.innerHTML = JSON.parse(event.data);
+  document.querySelector('#pings').appendChild(li);
+};
+
     </script>
+    <h1>Pings</h1>
+    <ul id='pings'></ul>
   </body>
 </html>
