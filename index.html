@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-</head>
-<body>
-<h2>Hii</h2>
-<video id="local" autoplay="autoplay"></video>
-<video id="remote" autoplay="autoplay"></video>
-
-<script src="./webrtc.io.js"></script>
-<script>
- rtc.connect('ws://127.0.0.1:8001');
-
-  rtc.createStream({"video": true, "audio":false}, function(stream){
-    // get local stream for manipulation
-    rtc.attachStream(stream, 'local');
-  });
-
-  rtc.on('add remote stream', function(stream){
-    // show the remote video
-    rtc.attachStream(stream, 'remote');
-  });
-</script> 
-</body>
+  <head>
+    <script src="adapter.js"></script>
+    <script src="webrtc.js"></script>
+    <title>WebRTC Audio/Video-Chat</title>
+  </head>
+  
+  <body>
+    <video id="remoteVideo" autoplay></video>
+    <video id="localVideo" autoplay muted></video>
+    <input id="videoCallButton" type="button" disabled value="Video Call"/>
+    <input id="endCallButton" type="button" disabled value="End Call"/>
+    <script type="text/javascript">
+      window.addEventListener("load", pageReady);
+    </script>
+  </body>
 </html>

@@ -1,0 +1,18 @@
+var Websocket = require('ws').Server,
+	wss = new Websocket({port :8123});
+	wss.broadcast = function (data){
+		var i=0,n=this.clients?this.clients.length:0,client=null;
+		for(;i<n;i++){
+			client = this.clients[i];
+			if(client.readyState === client.OPEN){
+				client.send(data);
+			}
+			else console.error('Error:the client state is '+client.readyState);
+
+		}
+	};
+	wss.on('connection',function(ws){
+		ws.on('message',function(message){
+			wss.broadcast(message);
+		});
+	});

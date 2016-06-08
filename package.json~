@@ -6,11 +6,6 @@
   "scripts": {
     "start": "node server.js"
   },
-   "dependencies": {
-   "webrtc.io": "^0.0.4",
-   "ws": "^1.0.23",
-    "express" : "^4.4.5"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shark-S/vcacss.git"
