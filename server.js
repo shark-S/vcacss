@@ -13,7 +13,7 @@ console.log("http server is listening on %d",port)
 
 var wss = new websocket({server:server})
 console.log("websocket server created")
-
+x = 0;
 wss.broadcast = function (data){
 		var i=0,n=this.clients?this.clients.length:0,client=null;
 		for(;i<n;i++){
@@ -21,6 +21,7 @@ console.log("Clinet "+i+" Here");
 			client = this.clients[i];
 			if(client.readyState === client.OPEN){
 				client.send(data);
+				x++;
 			}
 			else console.error('Error:the client state is '+client.readyState);
 
@@ -29,7 +30,7 @@ console.log("Clinet "+i+" Here");
 	wss.on('connection',function(ws){
 
   var id = setInterval(function() {
-    ws.send(wss.broadcast)
+    ws.send(wss.broadcast+"Client "+x+ " is here");
   }, 1000)
 
   console.log("websocket connection open")
