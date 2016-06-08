@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-   
+    <script src="adapter.js"></script>
+    <script src="webrtc.js"></script>
     <title>WebRTC Audio/Video-Chat</title>
   </head>
   
   <body>
-    
+    <video id="remoteVideo" autoplay></video>
+    <video id="localVideo" autoplay muted></video>
+    <input id="videoCallButton" type="button" disabled value="Video Call"/>
+    <input id="endCallButton" type="button" disabled value="End Call"/>
     <script type="text/javascript">
-    var host = location.origin.replace(/^http/,'ws'),ws = new WebSocket(host);
-      ws.onmessage = function (event) {
-  var li = document.createElement('li');
-  li.innerHTML = JSON.parse(event.data);
-  document.querySelector('#pings').appendChild(li);
-};
+      window.addEventListener("load", pageReady);
 
     </script>
     <h1>Pings</h1>

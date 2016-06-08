@@ -1,7 +1,7 @@
 var host = location.origin.replace(/^http/,'ws');
 var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     videoCallButton = null, endCallButton = null,
-    peerConn = null, wsc = new WebSocket(host),
+    peerConn = null, ws = new WebSocket(host),
     peerConnCfg = {'iceServers': 
       [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]
     };
@@ -16,7 +16,7 @@ function pageReady() {
     videoCallButton.removeAttribute("disabled");
     videoCallButton.addEventListener("click", initiateCall);
     endCallButton.addEventListener("click", function (evt) {
-      wsc.send(JSON.stringify({"closeConnection": true }));
+      ws.send(JSON.stringify({"closeConnection": true }));
     });
   } else {
     alert("Sorry, your browser does not support WebRTC!")
@@ -54,7 +54,7 @@ function answerCall() {
   }, function(error) { console.log(error);});
 };
 
-wsc.onmessage = function (evt) {
+ws.onmessage = function (evt) {
   var signal = null;
   if (!peerConn)
     answerCall();
@@ -75,7 +75,7 @@ function createAndSendOffer() {
       var off = new RTCSessionDescription(offer);
       peerConn.setLocalDescription(new RTCSessionDescription(off), 
         function() {
-          wsc.send(JSON.stringify({"sdp": off }));
+          ws.send(JSON.stringify({"sdp": off }));
         }, 
         function(error) { 
           console.log(error);
@@ -93,7 +93,7 @@ function createAndSendAnswer() {
     function (answer) {
       var ans = new RTCSessionDescription(answer);
       peerConn.setLocalDescription(ans, function() {
-          wsc.send(JSON.stringify({"sdp": ans }));
+          ws.send(JSON.stringify({"sdp": ans }));
         }, 
         function (error) { 
           console.log(error);
@@ -108,7 +108,7 @@ function createAndSendAnswer() {
 
 function onIceCandidateHandler(evt) {
   if (!evt || !evt.candidate) return;
-  wsc.send(JSON.stringify({"candidate": evt.candidate }));
+  ws.send(JSON.stringify({"candidate": evt.candidate }));
 };
 
 function onAddStreamHandler(evt) {
