@@ -8,6 +8,11 @@ var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     
 function pageReady() {
   // check browser WebRTC availability 
+   ws.onmessage = function (event) {
+  var li = document.createElement('li');
+  li.innerHTML = JSON.parse(event.data);
+  document.querySelector('#pings').appendChild(li);
+};
   if(navigator.getUserMedia) {
     videoCallButton = document.getElementById("videoCallButton");
     endCallButton = document.getElementById("endCallButton");
