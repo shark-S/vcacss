@@ -29,7 +29,7 @@ console.log("Clinet "+i+" Here");
 	wss.on('connection',function(ws){
 
   var id = setInterval(function() {
-    ws.send(JSON.stringify(new Date()), function() {  })
+    ws.send(wss.broadcast)
   }, 1000)
 
   console.log("websocket connection open")
