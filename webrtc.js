@@ -1,7 +1,8 @@
-var host = location.origin.replace(/^https/,'ws');
+var host = location.origin.replace(/^http/,'ws');
+var  ws = new WebSocket(host);
 var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     videoCallButton = null, endCallButton = null,
-    peerConn = null, ws = new WebSocket(host),
+    peerConn = null,
     peerConnCfg = {'iceServers': 
       [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]
     };
