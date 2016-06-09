@@ -1,4 +1,4 @@
-var host = location.origin.replace(/^http/,'ws');
+var host = location.origin.replace(/^https/,'ws');
 var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     videoCallButton = null, endCallButton = null,
     peerConn = null, ws = new WebSocket(host),

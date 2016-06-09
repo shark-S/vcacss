@@ -29,9 +29,6 @@ console.log("Clinet "+i+" Here");
 	};
 	wss.on('connection',function(ws){
 
-  var id = setInterval(function() {
-    ws.send("Client "+x+ " is here");
-  }, 1000)
 
   console.log("websocket connection open")
 

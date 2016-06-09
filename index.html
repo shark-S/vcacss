@@ -8,18 +8,19 @@
   
   <body>
     <video id="remoteVideo" autoplay></video>
+    </br>
     <video id="localVideo" autoplay muted></video>
     <input id="videoCallButton" type="button" disabled value="Video Call"/>
     <input id="endCallButton" type="button" disabled value="End Call"/>
     <script type="text/javascript">
       window.addEventListener("load", pageReady);
-     var host = location.origin.replace(/^http/, 'ws')
+   /*  var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host);
 ws.onmessage = function (event) {
   var li = document.createElement('li');
   li.innerHTML = event.data;
   document.querySelector('#pings').appendChild(li);
-};
+};*/
 
     </script>
     <h1>Pings</h1>
