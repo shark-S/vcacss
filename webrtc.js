@@ -6,10 +6,11 @@ var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     peerConnCfg = {'iceServers': 
       [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]
     };
-    
+  
 function pageReady() {
   // check browser WebRTC availability 
-   
+  console.log("this is WebRTC");
+  console.log("navigator.getUserMedia"); 
   if(navigator.getUserMedia) {
     videoCallButton = document.getElementById("videoCallButton");
     endCallButton = document.getElementById("endCallButton");
@@ -27,10 +28,14 @@ function pageReady() {
 
 function prepareCall() {
   peerConn = new RTCPeerConnection(peerConnCfg);
+  console.log(peerConn);
   // send any ice candidates to the other peer
   peerConn.onicecandidate = onIceCandidateHandler;
+  console.log(peerConn.onicecandidate);
   // once remote stream arrives, show it in the remote video element
   peerConn.onaddstream = onAddStreamHandler;
+  console.log(peerConn.onaddstream);
+  console.log("Gere");
 };
 
 // run start(true) to initiate a call

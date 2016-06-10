@@ -17,7 +17,7 @@ RTCRtpSender, RTCRtpReceiver*/
 /* exported trace,requestUserMedia */
 
 'use strict';
-
+console.log("this is adapter.js");
 var getUserMedia = null;
 var attachMediaStream = null;
 var reattachMediaStream = null;
