@@ -10,7 +10,7 @@ var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
 function pageReady() {
   // check browser WebRTC availability 
   console.log("this is WebRTC");
-  console.log("navigator.getUserMedia"); 
+  console.log(navigator.getUserMedia); 
   if(navigator.getUserMedia) {
     videoCallButton = document.getElementById("videoCallButton");
     endCallButton = document.getElementById("endCallButton");
@@ -52,6 +52,7 @@ function initiateCall() {
 
 function answerCall() {
   prepareCall();
+  console.log("ansert call");
   // get the local stream, show it in the local video element and send it
   navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
     localVideoStream = stream;
@@ -83,6 +84,7 @@ function createAndSendOffer() {
       peerConn.setLocalDescription(new RTCSessionDescription(off), 
         function() {
           ws.send(JSON.stringify({"sdp": off }));
+          console.log("create offers for this "+off);
         }, 
         function(error) { 
           console.log(error);
@@ -101,6 +103,7 @@ function createAndSendAnswer() {
       var ans = new RTCSessionDescription(answer);
       peerConn.setLocalDescription(ans, function() {
           ws.send(JSON.stringify({"sdp": ans }));
+          console.log("Create answer " + ans);
         }, 
         function (error) { 
           console.log(error);
@@ -126,6 +129,7 @@ function onAddStreamHandler(evt) {
 };
 
 function endCall() {
+  console.log("in function end call");
   peerConn.close();
   peerConn = null;
   videoCallButton.removeAttribute("disabled");

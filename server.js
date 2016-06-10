@@ -35,7 +35,7 @@ console.log("Clinet "+i+" Here");
 
   ws.on("close", function() {
     console.log("websocket connection close")
-    clearInterval(id)
+   
   })
 
 		ws.on('message',function(message){
