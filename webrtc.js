@@ -27,10 +27,14 @@ function pageReady() {
 
 function prepareCall() {
   peerConn = new RTCPeerConnection(peerConnCfg);
+  console.log(peerConn);
   // send any ice candidates to the other peer
   peerConn.onicecandidate = onIceCandidateHandler;
   // once remote stream arrives, show it in the remote video element
+  console.log(peerConn)
   peerConn.onaddstream = onAddStreamHandler;
+  console.log(peerConn.onaddstream);
+  console.log("end here");
 };
 
 // run start(true) to initiate a call
