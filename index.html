@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="adapter.js"></script>
+       
+    <script src="./node_modules/webrtc-adapter/out/adapter.js"></script>
     <script src="webrtc.js"></script>
-
+    
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="getusermedia/main.css">
     <title>WebRTC Audio/Video-Chat</title>
   </head>
   
   <body>
-  <a href="./getusermedia/index.html" title="getUsermedia  with canvas" id="getUSer-can">getUsermedia-example</a>
-
+  
   <div id="container">
 
    
     <video id="remoteVideo" autoplay></video>
     
-    <video id="localVideo" autoplay muted></video>
+    <video id="localVideo" autoplay ></video>
+    </br>
+
     <input id="videoCallButton" type="button" disabled value="Video Call"/>
     <input id="endCallButton" type="button" disabled value="End Call"/>
     <script type="text/javascript">
       window.addEventListener("load", pageReady);
-    var host = location.origin.replace(/^http/, 'ws')
-var ws = new WebSocket(host);
-ws.onmessage = function (event) {
-  var li = document.createElement('li');
-  li.innerHTML = event.data;
-  document.querySelector('#pings').appendChild(li);
-};
+
 
     </script>
     </div>
-    <h1>Pings</h1>
-    <ul id='pings'></ul>
+   
   </body>
 </html>

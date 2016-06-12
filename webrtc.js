@@ -1,16 +1,14 @@
 var host = location.origin.replace(/^http/,'ws');
-var  ws = new WebSocket(host);
+        var  ws = new WebSocket(host);
 var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     videoCallButton = null, endCallButton = null,
-    peerConn = null,
+    peerConn = null, wsc = new WebSocket('ws://localhost:5000/'),
     peerConnCfg = {'iceServers': 
       [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]
     };
-  
+    
 function pageReady() {
   // check browser WebRTC availability 
-  console.log("this is WebRTC");
-  console.log(navigator.getUserMedia); 
   if(navigator.getUserMedia) {
     videoCallButton = document.getElementById("videoCallButton");
     endCallButton = document.getElementById("endCallButton");
@@ -19,7 +17,7 @@ function pageReady() {
     videoCallButton.removeAttribute("disabled");
     videoCallButton.addEventListener("click", initiateCall);
     endCallButton.addEventListener("click", function (evt) {
-      ws.send(JSON.stringify({"closeConnection": true }));
+      wsc.send(JSON.stringify({"closeConnection": true }));
     });
   } else {
     alert("Sorry, your browser does not support WebRTC!")
@@ -28,14 +26,10 @@ function pageReady() {
 
 function prepareCall() {
   peerConn = new RTCPeerConnection(peerConnCfg);
-  console.log(peerConn);
   // send any ice candidates to the other peer
   peerConn.onicecandidate = onIceCandidateHandler;
-  console.log(peerConn.onicecandidate);
   // once remote stream arrives, show it in the remote video element
   peerConn.onaddstream = onAddStreamHandler;
-  console.log(peerConn.onaddstream);
-  console.log("Gere");
 };
 
 // run start(true) to initiate a call
@@ -52,7 +46,6 @@ function initiateCall() {
 
 function answerCall() {
   prepareCall();
-  console.log("ansert call");
   // get the local stream, show it in the local video element and send it
   navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
     localVideoStream = stream;
@@ -62,11 +55,12 @@ function answerCall() {
   }, function(error) { console.log(error);});
 };
 
-ws.onmessage = function (evt) {
+wsc.onmessage = function (evt) {
   var signal = null;
   if (!peerConn)
     answerCall();
   signal = JSON.parse(evt.data);
+  console.log("here" +signal);
   if (signal.sdp) {
     peerConn.setRemoteDescription(new RTCSessionDescription(signal.sdp));
   }
@@ -83,8 +77,7 @@ function createAndSendOffer() {
       var off = new RTCSessionDescription(offer);
       peerConn.setLocalDescription(new RTCSessionDescription(off), 
         function() {
-          ws.send(JSON.stringify({"sdp": off }));
-          console.log("create offers for this "+off);
+          wsc.send(JSON.stringify({"sdp": off }));
         }, 
         function(error) { 
           console.log(error);
@@ -102,8 +95,7 @@ function createAndSendAnswer() {
     function (answer) {
       var ans = new RTCSessionDescription(answer);
       peerConn.setLocalDescription(ans, function() {
-          ws.send(JSON.stringify({"sdp": ans }));
-          console.log("Create answer " + ans);
+          wsc.send(JSON.stringify({"sdp": ans }));
         }, 
         function (error) { 
           console.log(error);
@@ -118,7 +110,7 @@ function createAndSendAnswer() {
 
 function onIceCandidateHandler(evt) {
   if (!evt || !evt.candidate) return;
-  ws.send(JSON.stringify({"candidate": evt.candidate }));
+  wsc.send(JSON.stringify({"candidate": evt.candidate }));
 };
 
 function onAddStreamHandler(evt) {
@@ -129,7 +121,6 @@ function onAddStreamHandler(evt) {
 };
 
 function endCall() {
-  console.log("in function end call");
   peerConn.close();
   peerConn = null;
   videoCallButton.removeAttribute("disabled");
