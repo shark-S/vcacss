@@ -1,5 +1,5 @@
 var host = location.origin.replace(/^http/,'ws');
-        var  ws = new WebSocket(host);
+        var  wsc = new WebSocket(host);
 var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     videoCallButton = null, endCallButton = null,
     peerConn = null, wsc = new WebSocket('ws://localhost:5000/'),
