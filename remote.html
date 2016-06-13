@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+       
+    <script src="./node_modules/webrtc-adapter/out/adapter.js"></script>
+    <script type="text/javascript" src='./node_module/webrtc.io/index.js'></script>
+    <script src="webrtc.js"></script>
+    
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+    <title>WebRTC Audio/Video-Chat</title>
+  </head>
+  
+  <body>
+  
+  <div id="container">
+
+   
+    <video id="remoteVideo" autoplay></video>
+    
+    </br>
+
+    <input id="videoCallButton" type="button" disabled value="Video Call"/>
+    <input id="endCallButton" type="button" disabled value="End Call"/>
+    <script type="text/javascript">
+      window.addEventListener("load", pageReady);
+
+
+    </script>
+    </div>
+   
+  </body>
+</html>

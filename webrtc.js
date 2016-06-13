@@ -1,5 +1,7 @@
 var host = location.origin.replace(/^http/,'ws');
         var  wsc = new WebSocket(host);
+
+  // wsc connect to websocket server 
 var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     videoCallButton = null, endCallButton = null,
     peerConn = null, 
@@ -9,6 +11,8 @@ var localVideoElem = null, remoteVideoElem = null, localVideoStream = null,
     
 function pageReady() {
   // check browser WebRTC availability 
+
+  // now here we start all values assigned here
   if(navigator.getUserMedia) {
     videoCallButton = document.getElementById("videoCallButton");
     endCallButton = document.getElementById("endCallButton");
@@ -23,7 +27,7 @@ function pageReady() {
     alert("Sorry, your browser does not support WebRTC!")
   }
 };
-
+// RTCPeerConnection represent a WebRTC connection between local computer and a reote peer.
 function prepareCall() {
   peerConn = new RTCPeerConnection(peerConnCfg);
   // send any ice candidates to the other peer
@@ -54,13 +58,23 @@ function answerCall() {
     createAndSendAnswer();
   }, function(error) { console.log(error);});
 };
+// this is function which execute first 
+// RTCremoteDescription
+wsc.onopen = function(){
+  var signal = null;
+  if(!peerConn)
+    answerCall();
 
+}
 wsc.onmessage = function (evt) {
   var signal = null;
   if (!peerConn)
     answerCall();
   signal = JSON.parse(evt.data);
-  console.log("here" +signal);
+  console.log(evt.data);
+  console.log("here"); 
+  console.log(signal.sdp);
+  console.log(signal.candidate);
   if (signal.sdp) {
     peerConn.setRemoteDescription(new RTCSessionDescription(signal.sdp));
   }

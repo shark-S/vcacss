@@ -6,7 +6,7 @@ var express = require('express')
   , server = http.createServer(app)
   , io = require('socket.io').listen(server);
 
-server.listen(port);
+server.listen(8080);
 
 // routing
 app.use(express.static(__dirname+"/"))
